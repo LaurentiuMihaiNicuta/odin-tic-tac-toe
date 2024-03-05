@@ -19,23 +19,17 @@ function gameBoard() {
     const render = () => console.log(board);
 
     const changeSymbol = (symbol, row, col) => {
-        if(board[row][col] < 3 ){
-
-
-        isEmptyCell  = true; 
-
+        if (board[row][col] === 'X' || board[row][col] === 'O') {
+            console.log("Mutare ilegala: Celula este deja ocupată");
+            return false;
+        }
+    
         const newBoard = JSON.parse(JSON.stringify(board));
         newBoard[row][col] = symbol;
         board = newBoard;
         render();
-        console.log("Mutare legala")
-        }else {
-
-        isEmptyCell = false;
-        console.log("Mutare ilegala")
-
-        }
-
+        console.log("Mutare legala");
+        return true;
     };
 
     return { getBoard, render, changeSymbol , isEmptyCell };
@@ -48,64 +42,72 @@ function gameControler(){
     const player1  = createPlayer('X');
     const player2 = createPlayer('O');
 
+    const winConditions = [
+        [[0, 0], [0, 1], [0, 2]], // Linii
+        [[1, 0], [1, 1], [1, 2]],
+        [[2, 0], [2, 1], [2, 2]],
+        [[0, 0], [1, 0], [2, 0]], // Coloane
+        [[0, 1], [1, 1], [2, 1]],
+        [[0, 2], [1, 2], [2, 2]],
+        [[0, 0], [1, 1], [2, 2]], // Diagonale
+        [[0, 2], [1, 1], [2, 0]]
+    ];
 
-    let emptyCell = board.isEmptyCell;
+  
     let activePlayer = player1;
 
-// OLD FUNCTION  - RESPOSABILITY FOR THE STATUS OF THE TURN ( NOW WE DONT NEED IT)
-//  const makeMove = (player,row,col) =>{
-//      if(player.status){
-//          console.log( " este randul lui " + player.symbol )
-//           board.changeSymbol(player.symbol,row,col)
-            
 
-//          if(emptyCell){
-
-//             changeTurn();
-//         }
-
-         
-            
-//       }else if(!player.status){
-//            console.log( " nu este randul lui" + player.symbol )
-//        }
-//    }
-    
-//    const changeTurn = () => {
-//        player1.status = !player1.status
-//        player2.status = !player2.status
-//    }
    
 
     const switchPlayer = () =>  {
-        if(activePlayer == player1){
-            activePlayer = player2;
-        }else if(activePlayer == player2){
-            activePlayer = player1;
+        activePlayer = activePlayer === player1 ? player2 : player1;
+    }
+
+    const makeMove = (row, col) => {
+        if (!board.isEmptyCell) {
+            console.log("Jocul s-a încheiat!");
+            return;
         }
-    }
 
-    const makeMove = (row,col) => {
-        
-            board.changeSymbol(activePlayer.symbol,row,col);
-            switchPlayer();
+        if (board.changeSymbol(activePlayer.symbol, row, col)) {
+            if (checkWinConditions(activePlayer.symbol)) {
+                console.log(`${activePlayer.symbol} a câștigat!`);
+                // Poți face aici orice alte acțiuni legate de câștigul jocului
+            } else {
+                switchPlayer();
+            }
+        }
+    };
 
-        
-    }
+    const checkWinConditions = (symbol) => {
+        for (let condition of winConditions) {
+            let win = true;
+            for (let [row, col] of condition) {
+                if (board.getBoard()[row][col] !== symbol) {
+                    win = false;
+                    break;
+                }
+            }
+            if (win) {
+                return true;
+            }
+        }
+        return false;
+    };
 
-
-   return { makeMove }
-    
-    
-    
+    return { makeMove };
 }
  
 
 
 
 const game = gameControler();
-
-
+game.makeMove(1,1);
+game.makeMove(1,1);
+game.makeMove(1,2);
+game.makeMove(0,2);
+game.makeMove(2,1);
+game.makeMove(2,0);
 
 
 
@@ -115,6 +117,11 @@ function createPlayer(symbol){
 
     return { symbol , getSymbol};
 }
+
+
+
+
+
 
 
 // OLD CODE - TEST ZONE
@@ -176,3 +183,26 @@ function createPlayer(symbol){
 
 
 
+// OLD FUNCTION  - RESPOSABILITY FOR THE STATUS OF THE TURN ( NOW WE DONT NEED IT)
+//  const makeMove = (player,row,col) =>{
+//      if(player.status){
+//          console.log( " este randul lui " + player.symbol )
+//           board.changeSymbol(player.symbol,row,col)
+            
+
+//          if(emptyCell){
+
+//             changeTurn();
+//         }
+
+         
+            
+//       }else if(!player.status){
+//            console.log( " nu este randul lui" + player.symbol )
+//        }
+//    }
+    
+//    const changeTurn = () => {
+//        player1.status = !player1.status
+//        player2.status = !player2.status
+//    }
