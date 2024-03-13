@@ -1,0 +1,47 @@
+
+.container {
+    background-color: red;
+    width: 80%;
+    height: 80%;
+
+}
+
+body {
+    background-color: green;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.table{
+    background-color: blue;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.table > div {
+    background-color: red;
+    height: 30%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    
+}
+
+.table > div > div {
+    background-color: yellow;
+    width: 20%;
+    height: 80%;
+
+}
+.footer{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: pink;
+    height: 10%;
+    
+}
