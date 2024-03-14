@@ -1,3 +1,8 @@
+:root {
+    --background: #596e79;
+    --lines : #66bfbf;
+}
+
 
 .container {
     background-color: red;
@@ -15,7 +20,7 @@ body {
 }
 
 .table{
-    background-color: blue;
+    background-color: var(--lines);
     height: 90%;
     display: flex;
     flex-direction: column;
@@ -23,7 +28,7 @@ body {
 }
 
 .table > div {
-    background-color: red;
+    
     height: 30%;
     display: flex;
     justify-content: space-around;
@@ -32,9 +37,14 @@ body {
 }
 
 .table > div > div {
-    background-color: yellow;
-    width: 20%;
-    height: 80%;
+    background-color: var(--background);
+;
+    width: 30%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size:150px;
 
 }
 .footer{
