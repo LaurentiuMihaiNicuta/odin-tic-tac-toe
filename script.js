@@ -44,7 +44,20 @@ function UI(){
 
                 })
                 
+                tableCell.addEventListener('mouseenter',function(){
+                    tableCell.style.background = '#596e79';
                 })
+
+                tableCell.addEventListener('mouseleave',function(){
+                    tableCell.style.background = '#303c42';
+                })
+
+
+                })
+
+                
+
+                
                 
         })
 

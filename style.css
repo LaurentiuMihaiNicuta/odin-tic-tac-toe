@@ -1,5 +1,5 @@
 :root {
-    --background: #596e79;
+    --background: #303c42;
     --lines : #66bfbf;
 }
 
@@ -7,6 +7,7 @@
 .red-border{
     border: solid 10px #f76b8a;
     border-radius: 10px;
+    
 }
 .container {
     
