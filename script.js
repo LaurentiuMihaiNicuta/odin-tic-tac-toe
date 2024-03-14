@@ -35,8 +35,11 @@ function UI(){
                 }else {
 
                     // css styling ceva cu border-rosu care dispare
-
-                    console.log('illegal move')
+                    tableCell.classList.add('red-border');
+                    setTimeout(function(){
+                    tableCell.classList.remove('red-border')
+                    }, 1000);
+                    
                 }
 
                 })
@@ -44,7 +47,6 @@ function UI(){
                 })
                 
         })
-
 
         // facem in functia renderTable updatarea array-ului original si a UI in sine + iscellEmpty 
         // daca voiam sa o facem in gameController trebuia sa mai cream o matrice si sa updatam cumva
@@ -54,10 +56,10 @@ function UI(){
 
     playAgainBtn.addEventListener('click', function(){
         if(game.getGameStatus()){
-            console.log('ITS TRUE THE GAME IS OVER')
+            
            game.resetGameController();
         }else {
-            console.log("GAME NOT OVER YET")
+            
         }
     })
 
@@ -66,6 +68,8 @@ function UI(){
     const resetTheUI = () => {
         tableBoard.innerHTML = " ";
         renderTable();
+        playAgainBtn.style.display = " none";
+        output.textContent = ' ';
 
     }
 
@@ -128,6 +132,7 @@ function gameControler(){
     const playerTwo = createPlayer('O','#fcfefe');
 
     let gameOVER = false; // responsabila de state-ul jocului
+    let gamesCounter = 0;
 
     let activePlayer = playerOne;
     let gameTable = gameUI.getNewTable(); // luam tabla
@@ -154,23 +159,30 @@ function gameControler(){
                 }
             }
     
-            if (win) {
-                console.log(sign + "Wins")
+            if (win || gamesCounter === 9 ) {
+                
+                
                 gameOVER = true;
-                gameUI.output.textContent = "The winner is : " + sign;
                 gameUI.playAgainBtn.style.display = 'block';
+
+                if(gamesCounter < 9){// distingem afisarea castigatorului in functie de daca a catigat
+                                    //cineva sau nu
+                    gameUI.output.textContent = "The winner is : " + sign;
+                }else{
+                    gameUI.output.textContent = "Nobody won!";
+                }
 
                 return true;
             }
 
         }
-        console.log("The game is on")
+        
         return false;
     };
 
 
     const makeMove = (arrayCell,arrayIndex, displayValue) => {
-
+            gamesCounter = gamesCounter + 1;
         //row[element] element fiind indexul array-ului , iar row este ales in functie de div-ul apasat
         //folosim varianta asta ptca asa modifica si matricea boardData declarata in functia UI 
             if(gameOVER === false){
@@ -178,17 +190,16 @@ function gameControler(){
 
                 arrayCell[arrayIndex] = activePlayer.getSign();
                 displayValue.textContent = activePlayer.getSign();
-                
+                displayValue.style.color = activePlayer.getColor();
                 checkWinConditions(activePlayer.getSign());
                 switchPlayer();
 
-                //debugging
-                console.log(gameTable);
-                console.log(gameOVER);
+                
+               
             }
 
             else if(gameOVER === true){
-                console.log("GAME OVER")
+                
             }
            
             
@@ -198,6 +209,7 @@ function gameControler(){
     const resetGameController= () => {
          gameOVER = false;
          activePlayer = playerOne;
+         gamesCounter = 0;
          for (let i = 0; i < gameTable.length; i++) {
             for (let j = 0; j < gameTable[i].length; j++) {
                 gameTable[i][j] = j; 
@@ -209,6 +221,8 @@ function gameControler(){
 
 
     }
+
+
     const getGameStatus = () => gameOVER;
 
     return { makeMove , resetGameController, getGameStatus  }

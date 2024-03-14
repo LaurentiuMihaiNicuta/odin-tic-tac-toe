@@ -4,15 +4,19 @@
 }
 
 
+.red-border{
+    border: solid 10px #f76b8a;
+    border-radius: 10px;
+}
 .container {
-    background-color: red;
+    
     width: 80%;
     height: 80%;
 
 }
 
 body {
-    background-color: green;
+    background-color: rgb(185, 185, 185);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -22,6 +26,8 @@ body {
 .table{
     background-color: var(--lines);
     height: 90%;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -38,20 +44,39 @@ body {
 
 .table > div > div {
     background-color: var(--background);
-;
+;   border-radius: 10px;
     width: 30%;
     height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size:150px;
+    font-size:200px;
 
 }
 .footer{
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    background-color: pink;
+    background-color: var(--background);
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     height: 10%;
     
+}
+
+.play-again{
+    width: 30%;
+    height: 60%;
+    margin-left:35px;
+    font-size:200%;
+    color: var(--background);
+    background-color: var(--lines);
+    border:none;
+    border-radius:10px;
+}
+
+.output{
+    margin-right:50px;
+    font-size:300%;
+    color: #f76b8a;
 }
